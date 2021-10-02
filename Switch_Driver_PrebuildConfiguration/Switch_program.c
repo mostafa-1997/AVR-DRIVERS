@@ -37,7 +37,7 @@ ES_t Switch_enuGetSwitchState(u8 * Copy_u8pu8Value)
 {
 	ES_t Local_enuErrorState = ES_NOK;
 
-	Local_enuErrorState = DIO_enuSetPinValue(SWITCH_u8GROUP,SWITCH_u8PIN,Copy_u8pu8Value);
+	Local_enuErrorState = DIO_enuGetPinValue(SWITCH_u8GROUP,SWITCH_u8PIN,Copy_u8pu8Value);
 
 	return Local_enuErrorState;
 }
