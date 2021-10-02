@@ -1,0 +1,35 @@
+/*
+ * SevenSegment_config.c
+ *
+ *  Created on: Oct 2, 2021
+ *      Author: sa7er
+ */
+#include "stdTypes.h"
+#include "errorStates.h"
+
+#include "SevenSegment_config.h"
+#include "SevenSegment_private.h"
+
+#include "DIO_interface.h"
+
+SSG_t SevenSegment_AstrSSGConfig[ SEVENSEGMENT_u8NUM ] =
+{
+		{DIO_u8GROUP_A,DIO_u8PIN0,DIO_u8GROUP_D,DIO_u8PIN1,DIO_u8GROUP_A,DIO_u8PIN1,
+				DIO_u8GROUP_A,DIO_u8PIN2,DIO_u8GROUP_A,DIO_u8PIN3,DIO_u8GROUP_A,DIO_u8PIN4,
+				DIO_u8GROUP_A,DIO_u8PIN5,DIO_u8GROUP_A,DIO_u8PIN6,
+
+		NOT_CONNECTED,NOT_CONNECTED,
+		NOT_CONNECTED,NOT_CONNECTED,
+
+		COMMON_ANODE},
+
+		{DIO_u8GROUP_B,DIO_u8PIN0,DIO_u8GROUP_C,DIO_u8PIN1,DIO_u8GROUP_B,DIO_u8PIN1,
+				DIO_u8GROUP_B,DIO_u8PIN2,DIO_u8GROUP_B,DIO_u8PIN3,DIO_u8GROUP_B,DIO_u8PIN4,
+				DIO_u8GROUP_B,DIO_u8PIN5,DIO_u8GROUP_B,DIO_u8PIN6,
+
+		NOT_CONNECTED,NOT_CONNECTED,
+		NOT_CONNECTED,NOT_CONNECTED,
+
+		COMMON_CATHODE}
+};
+

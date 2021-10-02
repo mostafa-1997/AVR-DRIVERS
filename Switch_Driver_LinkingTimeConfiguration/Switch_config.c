@@ -8,6 +8,7 @@
 #include "errorStates.h"
 
 #include "Switch_config.h"
+#include "Switch_private.h"
 
 #include "DIO_interface.h"
 
