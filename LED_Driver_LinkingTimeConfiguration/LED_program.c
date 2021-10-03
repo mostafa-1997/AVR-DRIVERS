@@ -30,7 +30,7 @@ ES_t LED_enuInit(LED_t * Copy_pAstrLED_AstrLEDConfig)
 			}
 			else
 			{
-				Local_u16ErrorStates |= (DIO_enuSetPinDirection(Copy_pAstrLED_AstrLEDConfig[Local_u8Iterator].LED_u8Port,Copy_pAstrLED_AstrLEDConfig[Local_u8Iterator].LED_u8Pin,DIO_u8OUTPUT))<<2;
+				Local_u16ErrorStates |= (DIO_enuSetPinDirection(Copy_pAstrLED_AstrLEDConfig[Local_u8Iterator].LED_u8Port,Copy_pAstrLED_AstrLEDConfig[Local_u8Iterator].LED_u8Pin,DIO_u8OUTPUT))<<(2*Local_u8Iterator);
 			}
 
 		}
