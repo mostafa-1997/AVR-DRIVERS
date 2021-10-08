@@ -12,6 +12,8 @@
 
 #include "DIO_interface.h"
 
+u8 Switch_u8SwCounts = SWITCH_u8NUM;
+
 
 SW_t Switch_AstrSwitchConfig[ SWITCH_u8NUM ] =
 {

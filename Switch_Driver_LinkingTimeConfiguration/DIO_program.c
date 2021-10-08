@@ -11,6 +11,7 @@
 #include "DIO_private.h"
 #include "DIO_config.h"
 
+
 ES_t DIO_enuInit(void)
 {
 	ES_t Local_enuErrorState = ES_NOK;

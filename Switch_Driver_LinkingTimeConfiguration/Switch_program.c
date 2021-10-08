@@ -12,6 +12,7 @@
 
 #include "DIO_interface.h"
 
+u8 extern Switch_u8SwCounts;
 
 ES_t Switch_enuInit(SW_t * Copy_pAstrSwitchConfig)
 {
@@ -19,7 +20,7 @@ ES_t Switch_enuInit(SW_t * Copy_pAstrSwitchConfig)
 
 
 	u8 Local_u8Iterator;
-	for(Local_u8Iterator = 0;Local_u8Iterator<3;Local_u8Iterator++)
+	for(Local_u8Iterator = 0;Local_u8Iterator<Switch_u8SwCounts;Local_u8Iterator++)
 	{
 		DIO_enuSetPinDirection(Copy_pAstrSwitchConfig[Local_u8Iterator].Switch_u8Group,Copy_pAstrSwitchConfig[Local_u8Iterator].Switch_u8Pin,DIO_u8INPUT);
 		DIO_enuSetPinValue((Copy_pAstrSwitchConfig + Local_u8Iterator)->Switch_u8Group,(Copy_pAstrSwitchConfig + Local_u8Iterator)->Switch_u8Pin,(Copy_pAstrSwitchConfig + Local_u8Iterator)->Switch_u8State);
