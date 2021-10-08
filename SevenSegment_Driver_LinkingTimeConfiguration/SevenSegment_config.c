@@ -12,6 +12,8 @@
 
 #include "DIO_interface.h"
 
+u8 SevenSegment_u8SSGCount = SEVENSEGMENT_u8NUM;
+
 SSG_t SevenSegment_AstrSSGConfig[ SEVENSEGMENT_u8NUM ] =
 {
 		{DIO_u8GROUP_A,DIO_u8PIN0,DIO_u8GROUP_D,DIO_u8PIN1,DIO_u8GROUP_A,DIO_u8PIN1,

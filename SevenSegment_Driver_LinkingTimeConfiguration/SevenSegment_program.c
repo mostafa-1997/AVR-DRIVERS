@@ -12,12 +12,14 @@
 #include "SevenSegment_private.h"
 #include "SevenSegment_config.h"
 
+extern u8 SevenSegment_u8SSGCount;
+
 ES_t SevenSegment_enuInit(SSG_t * SevenSegment_pAstrSSGConfig)
 {
 	ES_t Local_enuErrorState = ES_NOK;
 
 	u8 Local_u8Iterator;
-	for(Local_u8Iterator = 0;Local_u8Iterator<SEVENSEGMENT_u8NUM;Local_u8Iterator++)
+	for(Local_u8Iterator = 0;Local_u8Iterator<SevenSegment_u8SSGCount;Local_u8Iterator++)
 	{
 		DIO_enuSetPinDirection(SevenSegment_pAstrSSGConfig[Local_u8Iterator].A_Port,SevenSegment_pAstrSSGConfig[Local_u8Iterator].A_Pin,DIO_u8OUTPUT);
 		DIO_enuSetPinDirection(SevenSegment_pAstrSSGConfig[Local_u8Iterator].B_Port,SevenSegment_pAstrSSGConfig[Local_u8Iterator].B_Pin,DIO_u8OUTPUT);

@@ -12,6 +12,8 @@
 #include "LED_config.h"
 #include "LED_private.h"
 
+extern u8 LED_u8LEDCount;
+
 ES_t LED_enuInit(LED_t * Copy_pAstrLED_AstrLEDConfig)
 {
 	ES_t Local_enuErrorState = ES_NOK;
@@ -22,7 +24,7 @@ ES_t LED_enuInit(LED_t * Copy_pAstrLED_AstrLEDConfig)
 		u16 Local_u16ErrorStates = 0;
 
 		u8 Local_u8Iterator;
-		for(Local_u8Iterator = 0;Local_u8Iterator<LED_u8NUM;Local_u8Iterator++)
+		for(Local_u8Iterator = 0;Local_u8Iterator<LED_u8LEDCount;Local_u8Iterator++)
 		{
 			if(Local_u8Iterator == 0)
 			{
