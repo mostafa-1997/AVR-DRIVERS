@@ -100,6 +100,35 @@ ES_t LCD_enuSendCommand(u8 Copy_u8Data)
 	return Local_enuErrorState;
 }
 
+ES_t LCD_enuSendString(const char * Copy_pcString)
+{
+	ES_t Local_enuErrorState = ES_NOK;
+
+	u32 Local_u8ErrorState = 0;
+
+	if(Copy_pcString != NULL)
+	{
+		u8 Local_u8Iterator = 0;
+		while(*Copy_pcString)//'\0'
+		{
+			Local_u8ErrorState = DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8HIGH);
+			Local_u8ErrorState |= (LCD_enuWriteNLatch(*Copy_pcString++))<<(LCD_u8ERROR_STATE_SHIFT_BIT * Local_u8Iterator);
+			Local_u8Iterator++;
+		}
+		if(Local_u8ErrorState == 0)
+		{
+			Local_enuErrorState = ES_OK;
+		}
+
+	}
+	else
+	{
+		Local_enuErrorState = ES_NULL_POINTER;
+	}
+
+	return Local_enuErrorState;
+}
+
 static ES_t LCD_enuWriteNLatch(u8 Copy_u8Data)
 {
 	ES_t Local_enuErrorState = ES_NOK;

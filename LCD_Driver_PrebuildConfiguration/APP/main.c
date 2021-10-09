@@ -13,13 +13,7 @@ int main()
 {
 
 	LCD_enuInit();
-	LCD_enuSendData('M');
-	LCD_enuSendData('O');
-	LCD_enuSendData('S');
-	LCD_enuSendData('T');
-	LCD_enuSendData('A');
-	LCD_enuSendData('F');
-	LCD_enuSendData('A');
+	LCD_enuSendString("SOLOMATE");
 
 	while(1); //super loop system
 	return 0;
