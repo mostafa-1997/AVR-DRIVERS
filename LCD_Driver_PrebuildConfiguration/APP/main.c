@@ -13,6 +13,7 @@ int main()
 {
 
 	LCD_enuInit();
+	LCD_enuGoToPosition(LCD_u8TWO,LCD_u8TEN);
 	LCD_enuSendString("SOLOMATE");
 
 	while(1); //super loop system

@@ -129,6 +129,31 @@ ES_t LCD_enuSendString(const char * Copy_pcString)
 	return Local_enuErrorState;
 }
 
+ES_t LCD_enuGoToPosition(u8 Copy_u8Line,u8 Copy_u8Column)//16*2
+{
+	ES_t Local_enuErrorState = ES_NOK;
+
+	u8 Local_u8ErrorState = 0;
+
+	Local_u8ErrorState = DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8LOW);//sending command
+
+	if(Copy_u8Line == LCD_u8ONE)
+	{
+		Local_u8ErrorState |= LCD_enuWriteNLatch(LCD_u8FIRST_LINE_STARTING_ADDRESS + (Copy_u8Column - LCD_u8ONE))<<LCD_u8ERROR_STATE_SHIFT_BIT;
+	}
+	else if(Copy_u8Line == LCD_u8TWO)
+	{
+		Local_u8ErrorState |= LCD_enuWriteNLatch(LCD_u8SECOND_LINE_STARTING_ADDRESS + (Copy_u8Column - LCD_u8ONE))<<LCD_u8ERROR_STATE_SHIFT_BIT;
+	}
+
+	if(Local_u8ErrorState == 0)
+	{
+		Local_enuErrorState = ES_OK;
+	}
+
+	return Local_enuErrorState;
+}
+
 static ES_t LCD_enuWriteNLatch(u8 Copy_u8Data)
 {
 	ES_t Local_enuErrorState = ES_NOK;
