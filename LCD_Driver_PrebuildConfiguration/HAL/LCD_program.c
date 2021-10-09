@@ -154,6 +154,76 @@ ES_t LCD_enuGoToPosition(u8 Copy_u8Line,u8 Copy_u8Column)//16*2
 	return Local_enuErrorState;
 }
 
+ES_t LCD_enuSendExtraCharacter(u8 Copy_Au8Arr[],u8 Copy_u8PatternNumber,u8 Copy_u8NumberOfPatterns,u8 Copy_u8Line,u8 Copy_u8Column,u8 Copy_u8IncDec)
+{
+	ES_t Local_enuErrorState = ES_NOK;
+
+	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8LOW);//sending command
+
+	switch(Copy_u8PatternNumber)
+	{
+		case LCD_u8ZERO:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_ZERO);
+		break;
+		case LCD_u8ONE:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_ONE);
+		break;
+		case LCD_u8TWO:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_TWO);
+		break;
+		case LCD_u8THREE:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_THREE);
+		break;
+		case LCD_u8FOUR:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_FOUR);
+		break;
+		case LCD_u8FIVE:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_FIVE);
+		break;
+		case LCD_u8SIX:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_SIX);
+		break;
+		case LCD_u8SEVEN:
+			LCD_enuWriteNLatch(LCD_u8PATTERN_SEVEN);
+		break;
+	}
+
+	/*FILL THE CGRAM WITH THE PATTERNS*/
+	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8HIGH);//sending data
+
+	u8 Local_u8Iterator;
+	for(Local_u8Iterator = 0;Local_u8Iterator<Copy_u8NumberOfPatterns*LCD_u8EIGHT;Local_u8Iterator++)
+		LCD_enuWriteNLatch(Copy_Au8Arr[Local_u8Iterator]);
+
+	/*INCREMENT OR DECREMENT*/
+	if(Copy_u8IncDec == LCD_u8DECREMENT)
+	{
+		DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8LOW);//sending command
+		LCD_enuWriteNLatch(LCD_u8ENTRY_MODE_SET_DECREMENT);
+	}
+
+	/*GO TO POSITION*/
+	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8LOW);//sending command
+	if(Copy_u8Line == LCD_u8ONE)
+	{
+		LCD_enuWriteNLatch(LCD_u8FIRST_LINE_STARTING_ADDRESS + (Copy_u8Column - LCD_u8ONE));
+	}
+	else if(Copy_u8Line == LCD_u8TWO)
+	{
+		LCD_enuWriteNLatch(LCD_u8SECOND_LINE_STARTING_ADDRESS + (Copy_u8Column - LCD_u8ONE));
+	}
+
+	/*DISPLAY DATA*/
+	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8HIGH);//sending data
+	for(Local_u8Iterator = 0;Local_u8Iterator<Copy_u8NumberOfPatterns;Local_u8Iterator++)
+	{
+		LCD_enuWriteNLatch(Copy_u8PatternNumber);
+		Copy_u8PatternNumber++;
+	}
+
+	return Local_enuErrorState;
+}
+
 static ES_t LCD_enuWriteNLatch(u8 Copy_u8Data)
 {
 	ES_t Local_enuErrorState = ES_NOK;

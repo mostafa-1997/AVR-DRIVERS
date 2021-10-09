@@ -18,6 +18,8 @@ ES_t LCD_enuSendString(const char * Copy_pcString);
 
 ES_t LCD_enuGoToPosition(u8 Copy_u8Line,u8 Copy_u8Column);
 
+ES_t LCD_enuSendExtraCharacter(u8 Copy_Au8Arr,u8 Copy_u8PatternNumber,u8 Copy_u8NumberOfPatterns,u8 Copy_u8Line,u8 Copy_u8Column,u8 Copy_u8IncDec);
+
 enum
 {
 	LCD_u8ZERO,
@@ -37,6 +39,9 @@ enum
 	LCD_u8FOURTEEN,
 	LCD_u8FIFTEEN,
 	LCD_u8SIXTEEN,
+
+	LCD_u8INCREMENT = 90,
+	LCD_u8DECREMENT = 80,
 };
 
 #endif /* HAL_LCD_INTERFACE_H_ */

@@ -17,6 +17,7 @@
 #define LCD_u8DISPLAY_CONTROL			0X0F
 #define LCD_u8DISPLAY_CLEAR				0X01
 #define LCD_u8ENTRY_MODE_SET			0x06
+#define LCD_u8ENTRY_MODE_SET_DECREMENT	0x04
 
 static ES_t LCD_enuWriteNLatch(u8 Copy_u8Value);
 static ES_t LCD_enuLatch(void);
@@ -27,10 +28,22 @@ static ES_t LCD_enuLatch(void);
 #define LCD_u8FIRST_LINE_STARTING_ADDRESS	0x80
 #define LCD_u8SECOND_LINE_STARTING_ADDRESS	0xC0
 
+#define LCD_u8PATTERN_ZERO				0x40
+#define LCD_u8PATTERN_ONE				0x48
+#define LCD_u8PATTERN_TWO				0x50
+#define LCD_u8PATTERN_THREE				0x58
+#define LCD_u8PATTERN_FOUR				0x60
+#define LCD_u8PATTERN_FIVE				0x68
+#define LCD_u8PATTERN_SIX				0x70
+#define LCD_u8PATTERN_SEVEN				0x78
+
+#define LCD_u8DECREMENT					80
+#define LCD_u8INCREMENT					90
+
 #define LCD_u8ZERO						0
 #define LCD_u8ONE						1
 #define LCD_u8TWO						2
-#define LCD_u8THRE						3
+#define LCD_u8THREE						3
 #define LCD_u8FOUR						4
 #define LCD_u8FIVE						5
 #define LCD_u8SIX						6
