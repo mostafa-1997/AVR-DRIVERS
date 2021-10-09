@@ -224,6 +224,52 @@ ES_t LCD_enuSendExtraCharacter(u8 Copy_Au8Arr[],u8 Copy_u8PatternNumber,u8 Copy_
 	return Local_enuErrorState;
 }
 
+ES_t LCD_enuDisplayInt(s32 Copy_u8Number)
+{
+	ES_t Local_enuErrorState = ES_NOK;
+
+	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8HIGH);//sending data
+
+	if(Copy_u8Number < LCD_u8ZERO)
+	{
+		LCD_enuWriteNLatch('-');
+		Copy_u8Number *= LCD_u8NEG_ONE;
+	}
+
+	//REVERSE THE NUMBER
+	s32 Local_s32Remainder = LCD_u8ZERO;
+	s32 Local_s32Current;
+	s32 Local_s32Duplicate = Copy_u8Number;
+
+	while(Local_s32Duplicate != LCD_u8ZERO)
+	{
+		Local_s32Current = Local_s32Duplicate%LCD_u8TEN;
+		Local_s32Remainder = (Local_s32Remainder * LCD_u8TEN) + Local_s32Current;
+		Local_s32Duplicate /= LCD_u8TEN;
+	}
+
+	while(Local_s32Remainder != LCD_u8ZERO)
+	{
+		LCD_enuWriteNLatch( (Local_s32Remainder%LCD_u8TEN) + LCD_u8ASCII_ZERO);
+		Local_s32Remainder /= LCD_u8TEN;
+	}
+
+	//SOLVING THE ZERO BUG
+	while(1)
+	{
+		Local_s32Current = Copy_u8Number%LCD_u8TEN;
+		if(Local_s32Current != LCD_u8ZERO)
+			break;
+		else
+		{
+			LCD_enuWriteNLatch(LCD_u8ASCII_ZERO);
+			Copy_u8Number /= LCD_u8TEN;
+		}
+	}
+
+	return Local_enuErrorState;
+}
+
 static ES_t LCD_enuWriteNLatch(u8 Copy_u8Data)
 {
 	ES_t Local_enuErrorState = ES_NOK;

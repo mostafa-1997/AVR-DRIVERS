@@ -20,6 +20,8 @@ ES_t LCD_enuGoToPosition(u8 Copy_u8Line,u8 Copy_u8Column);
 
 ES_t LCD_enuSendExtraCharacter(u8 Copy_Au8Arr,u8 Copy_u8PatternNumber,u8 Copy_u8NumberOfPatterns,u8 Copy_u8Line,u8 Copy_u8Column,u8 Copy_u8IncDec);
 
+ES_t LCD_enuDisplayInt(s32 Copy_u8Number);
+
 enum
 {
 	LCD_u8ZERO,

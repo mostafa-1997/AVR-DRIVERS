@@ -22,6 +22,8 @@ int main()
 
 	//LCD_enuSendExtraCharacter(arr,LCD_u8ZERO,LCD_u8TWO,LCD_u8TWO,LCD_u8SIXTEEN,LCD_u8DECREMENT);
 
+	//LCD_enuDisplayInt(-300);
+
 	while(1); //super loop system
 	return 0;
 }

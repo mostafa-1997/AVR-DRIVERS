@@ -40,6 +40,8 @@ static ES_t LCD_enuLatch(void);
 #define LCD_u8DECREMENT					80
 #define LCD_u8INCREMENT					90
 
+#define LCD_u8NEG_ONE					-1
+
 #define LCD_u8ZERO						0
 #define LCD_u8ONE						1
 #define LCD_u8TWO						2
@@ -58,5 +60,15 @@ static ES_t LCD_enuLatch(void);
 #define LCD_u8FIFTEEN					15
 #define LCD_u8SIXTEEN					16
 
+#define LCD_u8ASCII_ZERO				48
+#define LCD_u8ASCII_ONE					49
+#define LCD_u8ASCII_TWO					50
+#define LCD_u8ASCII_THREE				51
+#define LCD_u8ASCII_FOUR				52
+#define LCD_u8ASCII_FIVE				53
+#define LCD_u8ASCII_SIX					54
+#define LCD_u8ASCII_SEVEN				55
+#define LCD_u8ASCII_EIGHT				56
+#define LCD_u8ASCII_NINE				57
 
 #endif /* HAL_LCD_PRIVATE_H_ */
