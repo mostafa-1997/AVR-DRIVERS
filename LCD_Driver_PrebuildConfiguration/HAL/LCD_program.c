@@ -224,48 +224,137 @@ ES_t LCD_enuSendExtraCharacter(u8 Copy_Au8Arr[],u8 Copy_u8PatternNumber,u8 Copy_
 	return Local_enuErrorState;
 }
 
-ES_t LCD_enuDisplayInt(s32 Copy_u8Number)
+ES_t LCD_enuDisplayInt(s32 Copy_s32Number)
 {
 	ES_t Local_enuErrorState = ES_NOK;
 
 	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8HIGH);//sending data
 
-	if(Copy_u8Number < LCD_u8ZERO)
+	if(Copy_s32Number == LCD_u8ZERO)
+		LCD_enuWriteNLatch(LCD_u8ASCII_ZERO);
+	else
 	{
-		LCD_enuWriteNLatch('-');
-		Copy_u8Number *= LCD_u8NEG_ONE;
+		if(Copy_s32Number < LCD_u8ZERO)
+			{
+				LCD_enuWriteNLatch('-');
+				Copy_s32Number *= LCD_u8NEG_ONE;
+			}
+
+			//REVERSE THE NUMBER
+			s32 Local_s32Remainder = LCD_u8ZERO;
+			s32 Local_s32Current;
+			s32 Local_s32Duplicate = Copy_s32Number;
+
+			while(Local_s32Duplicate != LCD_u8ZERO)
+			{
+				Local_s32Current = Local_s32Duplicate%LCD_u8TEN;
+				Local_s32Remainder = (Local_s32Remainder * LCD_u8TEN) + Local_s32Current;
+				Local_s32Duplicate /= LCD_u8TEN;
+			}
+
+			while(Local_s32Remainder != LCD_u8ZERO)
+			{
+				LCD_enuWriteNLatch( (Local_s32Remainder%LCD_u8TEN) + LCD_u8ASCII_ZERO);
+				Local_s32Remainder /= LCD_u8TEN;
+			}
+
+			//SOLVING THE ZERO BUG
+			while(1)
+			{
+				Local_s32Current = Copy_s32Number%LCD_u8TEN;
+				if(Local_s32Current != LCD_u8ZERO)
+					break;
+				else
+				{
+					LCD_enuWriteNLatch(LCD_u8ASCII_ZERO);
+					Copy_s32Number /= LCD_u8TEN;
+				}
+			}
 	}
 
-	//REVERSE THE NUMBER
-	s32 Local_s32Remainder = LCD_u8ZERO;
-	s32 Local_s32Current;
-	s32 Local_s32Duplicate = Copy_u8Number;
+	return Local_enuErrorState;
+}
 
-	while(Local_s32Duplicate != LCD_u8ZERO)
-	{
-		Local_s32Current = Local_s32Duplicate%LCD_u8TEN;
-		Local_s32Remainder = (Local_s32Remainder * LCD_u8TEN) + Local_s32Current;
-		Local_s32Duplicate /= LCD_u8TEN;
-	}
+ES_t LCD_enuDisplayFloat(f32 Copy_f32Number)
+{
+	ES_t Local_enuErrorState = ES_NOK;
 
-	while(Local_s32Remainder != LCD_u8ZERO)
-	{
-		LCD_enuWriteNLatch( (Local_s32Remainder%LCD_u8TEN) + LCD_u8ASCII_ZERO);
-		Local_s32Remainder /= LCD_u8TEN;
-	}
+	DIO_enuSetPinValue(LCD_u8RS_GROUP,LCD_u8RS_PIN,DIO_u8HIGH);//sending data
 
-	//SOLVING THE ZERO BUG
-	while(1)
+	u32 Local_u32IntVer = (u32)Copy_f32Number;
+
+	if(Local_u32IntVer == LCD_u8ZERO)
 	{
-		Local_s32Current = Copy_u8Number%LCD_u8TEN;
-		if(Local_s32Current != LCD_u8ZERO)
-			break;
-		else
+		LCD_enuWriteNLatch(LCD_u8ASCII_ZERO);
+		//ADD THE FLOATING POINT
+		LCD_enuWriteNLatch('.');
+
+		//DISPLAY NUMBERS AFTER THE FLOATING POINT
+		while((u32)Copy_f32Number)
 		{
-			LCD_enuWriteNLatch(LCD_u8ASCII_ZERO);
-			Copy_u8Number /= LCD_u8TEN;
+			Copy_f32Number *= 10;
+			LCD_enuWriteNLatch(((u32)Copy_f32Number%LCD_u8TEN) + LCD_u8ASCII_ZERO);
+			Copy_f32Number = Copy_f32Number - (u32)Copy_f32Number;
 		}
 	}
+
+	else
+	{
+		if(Copy_f32Number < LCD_u8ZERO)
+			{
+				LCD_enuWriteNLatch('-');
+				Copy_f32Number *= LCD_u8NEG_ONE;
+			}
+
+			//REVERSE THE NUMBER
+			u32 Local_u32Remainder = LCD_u8ZERO;
+			u32 Local_u32Current;
+			u32 Local_u32Duplicate = Local_u32IntVer;
+
+			while(Local_u32Duplicate != LCD_u8ZERO)
+			{
+				Local_u32Current = Local_u32Duplicate%LCD_u8TEN;
+				Local_u32Remainder = (Local_u32Remainder * LCD_u8TEN) + Local_u32Current;
+				Local_u32Duplicate /= LCD_u8TEN;
+			}
+
+			while(Local_u32Remainder != LCD_u8ZERO)
+			{
+				LCD_enuWriteNLatch( (Local_u32Remainder%LCD_u8TEN) + LCD_u8ASCII_ZERO);
+				Local_u32Remainder /= LCD_u8TEN;
+			}
+
+			//SOLVING THE ZERO BUG
+			s32 Local_s32Duplicate2 = Local_u32IntVer;
+			while(1)
+			{
+				Local_u32Current = Local_s32Duplicate2%LCD_u8TEN;
+				if(Local_u32Current != LCD_u8ZERO)
+					break;
+				else
+				{
+					LCD_enuWriteNLatch(LCD_u8ASCII_ZERO);
+					Local_s32Duplicate2 /= LCD_u8TEN;
+				}
+			}
+
+			//ADD THE FLOATING POINT
+			LCD_enuWriteNLatch('.');
+
+			//DISPLAY NUMBERS AFTER THE FLOATING POINT
+			Copy_f32Number -=  Local_u32IntVer;
+
+			while(Copy_f32Number)
+			{
+				Copy_f32Number *= 10;
+				LCD_enuWriteNLatch(((u32)Copy_f32Number%LCD_u8TEN) + LCD_u8ASCII_ZERO);
+				Copy_f32Number = Copy_f32Number - (u32)Copy_f32Number;
+			}
+
+	}
+
+
+
 
 	return Local_enuErrorState;
 }

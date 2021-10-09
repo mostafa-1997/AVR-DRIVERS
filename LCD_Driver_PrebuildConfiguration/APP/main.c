@@ -24,6 +24,8 @@ int main()
 
 	//LCD_enuDisplayInt(-300);
 
+	LCD_enuDisplayFloat(103.89);
+
 	while(1); //super loop system
 	return 0;
 }

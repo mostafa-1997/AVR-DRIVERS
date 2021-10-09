@@ -40,6 +40,7 @@ static ES_t LCD_enuLatch(void);
 #define LCD_u8DECREMENT					80
 #define LCD_u8INCREMENT					90
 
+#define LCD_f8FLOAT_ZERO				0.0
 #define LCD_u8NEG_ONE					-1
 
 #define LCD_u8ZERO						0
