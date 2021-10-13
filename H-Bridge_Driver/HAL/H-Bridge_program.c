@@ -1,0 +1,40 @@
+/*
+ * H-Bridge_program.c
+ *
+ *  Created on: Oct 13, 2021
+ *      Author: sa7er
+ */
+#include "../LIBRARY/errorStates.h"
+#include "../LIBRARY/stdTypes.h"
+
+#include "../MCAL/DIO_interface.h"
+
+#include "H-Bridge_config.h"
+#include "H-Bridge_private.h"
+
+ES_t HAL_Bridge_enuInit(void)
+{
+	ES_t Local_enuErrorState = ES_NOK;
+
+	//ENALBLE 1 CONFIG
+	DIO_enuSetPinDirection(HAL_BRIDGE_u8EN1_PORT,HAL_BRIDGE_u8EN1_PIN,DIO_u8OUTPUT);
+	DIO_enuSetPinValue(HAL_BRIDGE_u8EN1_PORT,HAL_BRIDGE_u8EN1_PIN,DIO_u8HIGH);
+
+#if HAL_BRIDGE_u8DIRECTION == HAL_BRIDGE_u8ACW
+	//MOTOR1 DIRECTION	A.W
+	DIO_enuSetPinDirection(HAL_BRIDGE_u8INPUT1_PORT,HAL_BRIDGE_u8INPUT1_PIN,DIO_u8OUTPUT);
+	DIO_enuSetPinValue(HAL_BRIDGE_u8INPUT1_PORT,HAL_BRIDGE_u8INPUT1_PIN,DIO_u8HIGH);
+
+	DIO_enuSetPinDirection(HAL_BRIDGE_u8INPUT2_PORT,HAL_BRIDGE_u8INPUT2_PIN,DIO_u8OUTPUT);
+	DIO_enuSetPinValue(HAL_BRIDGE_u8INPUT2_PORT,HAL_BRIDGE_u8INPUT2_PIN,DIO_u8LOW);
+
+#elif HAL_BRIDGE_u8DIRECTION == HAL_BRIDGE_u8CW
+	//MOTOR1 DIRECTION	C.W
+	DIO_enuSetPinDirection(HAL_BRIDGE_u8INPUT1_PORT,HAL_BRIDGE_u8INPUT1_PIN,DIO_u8OUTPUT);
+	DIO_enuSetPinValue(HAL_BRIDGE_u8INPUT1_PORT,HAL_BRIDGE_u8INPUT1_PIN,DIO_u8LOW);
+
+	DIO_enuSetPinDirection(HAL_BRIDGE_u8INPUT2_PORT,HAL_BRIDGE_u8INPUT2_PIN,DIO_u8OUTPUT);
+	DIO_enuSetPinValue(HAL_BRIDGE_u8INPUT2_PORT,HAL_BRIDGE_u8INPUT2_PIN,DIO_u8HIGH);
+#endif
+	return Local_enuErrorState;
+}
